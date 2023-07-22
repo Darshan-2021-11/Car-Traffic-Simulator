@@ -81,7 +81,7 @@ if(localStorage.getItem("bestBrain")){
 		}
 	*/
 		if(i!=0){
-			NeuralNetwork.mutate(cars[i].brain, .01);
+			NeuralNetwork.mutate(cars[i].brain, .2);
 		}
 	}
 }
