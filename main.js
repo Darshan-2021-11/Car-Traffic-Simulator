@@ -29,7 +29,7 @@ const road = new Road(carCanvas.width/2, carCanvas.width*.9);
 When player controls car with keys
 const car = new Car(road.getLaneCenter(1),100,30,50,"KEYS");
 */
-const N = 10;
+const N = 1000;
 const cars = generateCars(N);
 /*
 Never declare(or keep it in mind) that if a same variable is declared as let or const in global scope and you declare the same within some funciton and attempt it to save, only the global one will save(or something like that), but anyways the code won't work... Been debugging from 30 minutes with `bestCar`, declared in global as `let` and inside `animate()` as `const` and localStorage only retrieved or saved only one value of `bestBrain`.
