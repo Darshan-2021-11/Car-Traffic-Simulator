@@ -29,7 +29,7 @@ const road = new Road(carCanvas.width/2, carCanvas.width*.9);
 When player controls car with keys
 const car = new Car(road.getLaneCenter(1),100,30,50,"KEYS");
 */
-const N = 1000;
+const N = 250;
 const cars = generateCars(N);
 /*
 Never declare(or keep it in mind) that if a same variable is declared as let or const in global scope and you declare the same within some funciton and attempt it to save, only the global one will save(or something like that), but anyways the code won't work... Been debugging from 30 minutes with `bestCar`, declared in global as `let` and inside `animate()` as `const` and localStorage only retrieved or saved only one value of `bestBrain`.
@@ -87,13 +87,13 @@ if(localStorage.getItem("bestBrain")){
 }
 
 const traffic = [
-	new Car(road.getLaneCenter(1),-100,30,50,"DUMMY",Math.random()*3),
-	new Car(road.getLaneCenter(0),-300,30,50,"DUMMY",Math.random()*3),
-	new Car(road.getLaneCenter(2),-300,30,50,"DUMMY",Math.random()*3),
-	new Car(road.getLaneCenter(1),-500,30,50,"DUMMY",Math.random()*3),
-	new Car(road.getLaneCenter(1),-600,30,50,"DUMMY",Math.random()*3),
-	new Car(road.getLaneCenter(0),-750,30,50,"DUMMY",Math.random()*3),
-	new Car(road.getLaneCenter(1),-750,30,50,"DUMMY",Math.random()*3)
+	new Car(road.getLaneCenter(1),-100,30,50,"DUMMY",3,getRandomColor()),
+	new Car(road.getLaneCenter(0),-300,30,50,"DUMMY",5,getRandomColor()),
+	new Car(road.getLaneCenter(2),-300,30,50,"DUMMY",2,getRandomColor()),
+	new Car(road.getLaneCenter(1),-500,30,50,"DUMMY",1,getRandomColor()),
+	new Car(road.getLaneCenter(1),-600,30,50,"DUMMY",1.5,getRandomColor()),
+	new Car(road.getLaneCenter(0),-750,30,50,"DUMMY",.5,getRandomColor()),
+	new Car(road.getLaneCenter(1),-750,30,50,"DUMMY",2.5,getRandomColor())
 ];
 
 animate();
@@ -146,15 +146,15 @@ function animate(time){
 	road.draw(carCtx);
 
 	for(let i=0; i<traffic.length; i++){
-		traffic[i].draw(carCtx, "red");
+		traffic[i].draw(carCtx);
 	}
 
 	carCtx.globalAlpha = .2;
 	for(let i=0; i<cars.length; i++){
-		cars[i].draw(carCtx, "blue");
+		cars[i].draw(carCtx);
 	}
 	carCtx.globalAlpha = 1;
-	bestCar.draw(carCtx,"blue", true);
+	bestCar.draw(carCtx, true);
 
 	carCtx.restore();
 

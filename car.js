@@ -1,5 +1,5 @@
 class Car{
-	constructor(x, y, width, height,controlType,maxSpeed=3){
+	constructor(x, y, width, height,controlType,maxSpeed=3, color="blue"){
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -21,9 +21,28 @@ class Car{
 				);
 		}
 		this.controls = new Controls(controlType);
+		this.image = new Image();
+		this.image.src = "car.png";
+
+		this.mask = document.createElement("canvas");
+		this.mask.width = width;
+		this.mask.height = height;
+
+		const maskCtx = this.mask.getContext("2d");
+		this.image.onload = () => {
+			maskCtx.fillStyle = color;
+			maskCtx.rect(0, 0, this.width, this.height);
+			maskCtx.fill();
+
+			maskCtx.globalCompositeOperation = "destination-atop";
+			maskCtx.drawImage(this.image, 0, 0, this.width, this.height);
+		}
 	}
 
-	draw(ctx, color, drawSensor = false){
+	draw(ctx, drawSensor = false){
+		if(this.sensor && drawSensor){
+			this.sensor.draw(ctx);
+		}
 		/*
 		ctx.save();
 		ctx.translate(this.x, this.y);
@@ -47,7 +66,8 @@ class Car{
 
 		ctx.restore();
 		*/
-		//After making #createPolygon function;
+		/**
+		 * After making #createPolygon function;
 		if(this.damaged){
 			ctx.fillStyle = "gray";
 		}else{
@@ -63,6 +83,25 @@ class Car{
 		if(this.sensor && drawSensor){
 			this.sensor.draw(ctx);
 		}
+		*/
+		ctx.save();
+		ctx.translate(this.x, this.y);
+		ctx.rotate(this.angle);
+
+		if(!this.damaged) {
+			ctx.drawImage(this.mask,
+				-this.width/2,
+				-this.height/2,
+				this.width,
+				this.height);
+			ctx.globalCompositeOperation = "multiply";
+		}
+		ctx.drawImage(this.image,
+			-this.width/2,
+			-this.height/2,
+			this.width,
+			this.height);
+		ctx.restore();
 	}
 
 	update(roadBorders, traffic){
